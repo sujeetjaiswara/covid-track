@@ -44,3 +44,12 @@ npm run build
 ```sh
 npm run lint
 ```
+
+### Links
+https://www.npmjs.com/package/novelcovid
+https://disease.sh/docs/
+https://github.com/disease-sh/API
+https://github.com/disease-sh/awesome-novelcovid
+https://disease.sh/
+https://disease.sh/docs/#/COVID-19%3A%20Worldometers/get_v3_covid_19_countries__country_
+https://disease.sh/v3/covid-19/all
