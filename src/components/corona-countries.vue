@@ -1,69 +1,50 @@
 <template>
   <div>
-    <v-card class="elevation-2 mt-3">
-      <v-card-title>
-        Country
-        <v-spacer></v-spacer>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        ></v-text-field>
-      </v-card-title>
+    <!-- <pre>{{cloneCountries}}</pre> -->
 
-      <v-data-table
-        :headers="headers"
-        :items="cloneCountries"
-        :items-per-page="10"
-        class="elevation-0"
-        :loading="isLoading"
-        loading-text="Loading... Please wait"
-        :search="search"
-      >
+    <v-row class="mt-5">
+      <v-col lg="8" md="4" sm="4" cols="12">
+        <h4>Coronavirus cases</h4>
+      </v-col>
+      <v-col lg="4" md="4" sm="4" cols="12">
+        <v-text-field v-model="search" label="Search country" append-icon="mdi-magnify" single-line hide-details
+          class="w-50 float-right"></v-text-field>
+      </v-col>
+    </v-row>
+
+    <v-card class="elevation-2 mt-5">
+      <v-data-table :headers="headers" :items="cloneCountries" :items-per-page="10" class="elevation-0"
+        :loading="isLoading" loading-text="Loading... Please wait" :search="search">
         <template v-slot:item.country="{ item }">
-          <div
-            @click="getStatusByCountry(item.country)"
-            class="d-flex align-center country-link"
-          >
-            <v-img
-              class="mr-2 float-left"
-              :src="item.countryInfo.flag"
-              max-width="25"
-            ></v-img>
+          <div @click="getStatusByCountry(item.country)" class="d-flex align-center country-link">
+            <v-img class="mr-2 float-left" :src="item.countryInfo.flag" max-width="25"></v-img>
             {{ item.country }}
           </div>
         </template>
         <template v-slot:item.cases="{ item }">
           <v-chip v-show="item.cases" color="red" text-color="white">
-            {{ item.cases | thousandsToCommas }}
+            <!-- {{ item.cases | thousandsToCommas }} -->
+            cases
           </v-chip>
         </template>
         <template v-slot:item.deaths="{ item }">
-          <v-chip
-            v-show="item.deaths"
-            color="blue-grey lighten-4"
-            text-color="blue-grey lighten-1"
-            outlined
-          >
+          <v-chip v-show="item.deaths" color="blue-grey lighten-4" text-color="blue-grey lighten-1" outlined>
             <v-icon left>mdi-emoticon-sad</v-icon>
-            {{ item.deaths | thousandsToCommas }}
+            <!-- {{ item.deaths | thousandsToCommas }} -->
+            deaths
           </v-chip>
         </template>
         <template v-slot:item.recovered="{ item }">
-          <v-chip
-            v-show="item.recovered"
-            color="green lighten-1"
-            text-color="white"
-          >
+          <v-chip v-show="item.recovered" color="green lighten-1" text-color="white">
             <v-icon left>mdi-emoticon-happy</v-icon>
-            {{ item.recovered | thousandsToCommas }}
+            recovered
+            <!-- {{ item.recovered | thousandsToCommas }} -->
           </v-chip>
         </template>
         <template v-slot:item.active="{ item }">
           <v-chip v-show="item.active" color="blue" text-color="white">
-            {{ item.active | thousandsToCommas }}
+            active
+            <!-- {{ item.active | thousandsToCommas }} -->
           </v-chip>
         </template>
       </v-data-table>
@@ -71,49 +52,44 @@
   </div>
 </template>
 
-<script>
-import Vue from "vue";
-
-export default Vue.extend({
-  props: {
-    countries: {
-      type: Array
-    },
-    isLoading: Boolean
-  },
-  data() {
-    return {
-      cloneCountries: {},
-      headers: [
-        {
-          text: "Country",
-          align: "start",
-          sortable: true,
-          value: "country"
-        },
-        { text: "Cases", value: "cases" },
-        // { text: "Today Cases", value: "todayCases" },
-        { text: "Deaths", value: "deaths" },
-        // { text: "Today Deaths", value: "todayDeaths" },
-        { text: "Recovered", value: "recovered" },
-        { text: "Active", value: "active" }
-      ],
-      search: ""
-    };
-  },
-  created() {
-    this.cloneCountries = [...this.countries];
-  },
-  methods: {
-    getStatusByCountry(countryName) {
-      this.$emit("getStatusByCountry", countryName);
-    }
-  }
-});
-</script>
-
 <style scoped>
 .country-link {
   cursor: pointer;
 }
 </style>
+
+<script lang="ts" setup>
+import { onMounted } from 'vue';
+import { ref } from 'vue';
+
+const props = defineProps({
+  countries: Array,
+  isLoading: Boolean
+});
+
+const emit = defineEmits(['getStatusByCountry']);
+
+const cloneCountries = ref<any>([]);
+const search = ref("");
+
+const headers = ref([
+  {
+    text: "Country",
+    align: "start",
+    sortable: true,
+    value: "country"
+  },
+  { text: "Cases", value: "cases" },
+  { text: "Deaths", value: "deaths" },
+  { text: "Recovered", value: "recovered" },
+  { text: "Active", value: "active" }
+]);
+
+onMounted(() => {
+  cloneCountries.value = [...props.countries];
+});
+
+function getStatusByCountry(countryName: string) {
+  emit("getStatusByCountry", countryName);
+}
+</script>
