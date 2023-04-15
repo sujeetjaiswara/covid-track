@@ -10,6 +10,7 @@
       <DashboardTileLoader></DashboardTileLoader>
     </div>
     <div v-else>
+      <SearchInput @searchCountry="onSearch"></SearchInput>
       <corona-countries :countries="countries" :isLoading="isLoadingCountries" @getStatusByCountry="getStatusByCountry">
       </corona-countries>
     </div>
@@ -21,6 +22,7 @@ import { onMounted, ref } from "vue";
 import CoronaCountries from "./../components/corona-countries.vue";
 import DashboardTils from "./../components/dashboard-tile.vue";
 import DashboardTileLoader from "@/components/dashboard-tile-loader.vue";
+import SearchInput from "@/components/search-input.vue";
 
 const api = `https://disease.sh/v3/covid-19`;
 const totalCounts = ref<any>({});
@@ -88,5 +90,15 @@ function setLoadingCountry(value: boolean) {
 
 function setLoadingCountries(value: boolean) {
   isLoadingCountries.value = value;
+}
+
+async function onSearch(iso2: string) {
+  try {
+    const response: any = await fetch(`${api}/countries/${iso2}`);
+    countries.value = [];
+    countries.value = await response.json();
+  } catch (error) {
+    console.error('There was an error', error);
+  }
 }
 </script>

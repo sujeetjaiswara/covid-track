@@ -1,16 +1,6 @@
 <template>
   <div>
-    <!-- <pre>{{ cloneCountries[0] }}</pre> -->
-
-    <v-row class="mt-5">
-      <v-col lg="8" md="4" sm="4" cols="12">
-        <!-- <h4>Cases</h4> -->
-      </v-col>
-      <v-col lg="4" md="4" sm="4" cols="12">
-        <v-text-field v-model="search" label="Search country" append-inner-icon="mdi-magnify" single-line hide-details
-          density="compact" variant="outlined" class="w-50 float-right" :height="20" color="#000"></v-text-field>
-      </v-col>
-    </v-row>
+    <!-- <pre>{{ cloneCountries[0] }}</pre> -->  
 
     <v-data-table :headers="headers" :items="cloneCountries" :items-per-page="10"
       class="elevation-0 mt-5 border rounded pb-3" :loading="isLoading" loading-text="Loading.." :search="search"
@@ -59,7 +49,7 @@
           {{ item.raw.recovered?.toLocaleString() || 'N/A' }}
         </v-chip>
         <v-chip v-else color="green lighten-1" text-color="white">
-          N/A
+          0
         </v-chip>
       </template>
 
@@ -83,7 +73,7 @@
 </style>
 
 <script lang="ts" setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   countries: Array,
@@ -93,8 +83,6 @@ const props = defineProps({
 const emit = defineEmits(['getStatusByCountry']);
 
 const cloneCountries = ref<any>([]);
-const search = ref("");
-
 const headers = ref<any>([
   {
     title: "Country",
@@ -109,10 +97,6 @@ const headers = ref<any>([
 ]);
 
 onMounted(() => {
-  cloneCountries.value = [...props.countries];
-});
-
-onUpdated(()=>{
   cloneCountries.value = [...props.countries];
 });
 
