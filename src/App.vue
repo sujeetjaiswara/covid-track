@@ -11,4 +11,5 @@ import { RouterView } from 'vue-router'
     </v-layout>
 </template>
 
-<style scoped></style>
+<style>
+</style>
