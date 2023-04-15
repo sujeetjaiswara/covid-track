@@ -34,7 +34,7 @@ const countries = ref([]);
 const countryObj = ref({});
 
 onMounted(async () => {
-  await getStatusByCountry("india");
+  await getStatusByCountry("IN");
   await getAllStatus();
   await getAllCountries();
 });
@@ -67,11 +67,11 @@ async function getAllCountries() {
   setLoadingCountries(false);
 }
 
-async function getStatusByCountry(name: string) {
+async function getStatusByCountry(iso2: string) {
   setLoadingCountry(true);
 
   try {
-    const response: any = await fetch(`${api}/countries/${name}`);
+    const response: any = await fetch(`${api}/countries/${iso2}`);
     const jsonData = await response.json();
     countryObj.value = jsonData;
   } catch (error) {

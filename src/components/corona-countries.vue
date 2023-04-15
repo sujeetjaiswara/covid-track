@@ -117,7 +117,7 @@ function getStatusByCountry(event: Event, row: any) {
   event.stopPropagation();
 
   const _row = JSON.parse(JSON.stringify(row));
-  const countryName = _row.item.value.country;
+  const countryName = _row.item.value.countryInfo.iso2;
   emit("getStatusByCountry", countryName);
 }
 </script>
