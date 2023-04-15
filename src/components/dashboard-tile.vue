@@ -6,15 +6,13 @@
           <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
             color="blue-grey-lighten-5"></v-skeleton-loader>
           <v-card v-else color="blue-grey-lighten-5" class="elevation-0 rounded-2 borderH" min-height="100">
-            
             <v-card-title class="subtitle-1 font-weight-medium text-uppercase" text-color="#000">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <div> {{ cloneCountry.country }} </div>
                 <v-img :lazy-src="cloneCountry.countryInfo?.flag" :src="cloneCountry.countryInfo?.flag" max-width="40"
-                  aspect-ratio="16/9" class="me-2"></v-img>               
+                  aspect-ratio="16/9" class="me-2"></v-img>
               </div>
             </v-card-title>
-            
             <v-card-subtitle class="pt-1">
               Country
             </v-card-subtitle>

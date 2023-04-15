@@ -8,7 +8,7 @@
       </v-col>
       <v-col lg="4" md="4" sm="4" cols="12">
         <v-text-field v-model="search" label="Search country" append-inner-icon="mdi-magnify" single-line hide-details
-          density="compact" variant="outlined" class="w-50 float-right" :height="20" color="#000"></v-text-field>
+          density="compact" variant="outlined" class="w-50 float-right" :height="20" color="primary"></v-text-field>
       </v-col>
     </v-row>
 
@@ -36,9 +36,7 @@
         <v-chip v-if="item.raw.cases" color="red" text-color="white">
           {{ item.raw.cases?.toLocaleString() }}
         </v-chip>
-        <v-chip v-else color="red" text-color="white">
-          0
-        </v-chip>
+        <v-chip v-else color="red" text-color="white">0</v-chip>
       </template>
 
       <!-- Deaths -->
@@ -48,7 +46,7 @@
           {{ item.raw.deaths?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="blue-grey lighten-4" text-color="blue-grey lighten-2">
-          0
+          <v-icon class="me-1">mdi-emoticon-sad</v-icon>0
         </v-chip>
       </template>
 
@@ -56,21 +54,19 @@
       <template v-slot:item.recovered="{ item }">
         <v-chip v-if="item.raw.recovered" color="green lighten-1" text-color="white">
           <v-icon class="me-1">mdi-emoticon-happy</v-icon>
-          {{ item.raw.recovered?.toLocaleString() || 'N/A' }}
+          {{ item.raw.recovered?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="green lighten-1" text-color="white">
-          N/A
+          <v-icon class="me-1">mdi-emoticon-happy</v-icon>0
         </v-chip>
       </template>
 
       <!-- Active -->
       <template v-slot:item.active="{ item }">
         <v-chip v-if="item.raw.active" color="blue" text-color="white">
-          {{ item.raw.active?.toLocaleString() || 'N/A' }}
+          {{ item.raw.active?.toLocaleString() }}
         </v-chip>
-        <v-chip v-else color="blue" text-color="white">
-          0
-        </v-chip>
+        <v-chip v-else color="blue" text-color="white">0</v-chip>
       </template>
     </v-data-table>
   </div>
@@ -85,9 +81,9 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
-export interface Props {  
+export interface Props {
   isLoading?: boolean,
-  countries?: any[]  
+  countries?: any[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
