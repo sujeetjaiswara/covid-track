@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@aero/centra@^1.0.3":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@aero/centra/-/centra-1.0.8.tgz#e73f96f96426d216c47cedadb417f82be339effa"
-  integrity sha512-ku3GzR89TCFAzBqK6j41SRAUPZHYrZO57ZzuQnmanlED509sIWt362rz+Msoytq0s9V0j0TqqZCoaK/fszb07g==
-
 "@babel/parser@^7.16.4":
   version "7.21.4"
   resolved "https://registry.yarnpkg.com/@babel/parser/-/parser-7.21.4.tgz#94003fdfc520bbe2875d4ae557b43ddb6d880f17"
@@ -646,11 +641,6 @@ csstype@^2.6.8:
   version "2.6.21"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-2.6.21.tgz#2efb85b7cc55c80017c66a5ad7cbd931fda3a90e"
   integrity sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==
-
-date-fns@^2.29.3:
-  version "2.29.3"
-  resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.29.3.tgz#27402d2fc67eb442b511b70bbdf98e6411cd68a8"
-  integrity sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==
 
 de-indent@^1.0.2:
   version "1.0.2"
@@ -1502,13 +1492,6 @@ normalize-package-data@^2.3.2:
     resolve "^1.10.0"
     semver "2 || 3 || 4 || 5"
     validate-npm-package-license "^3.0.1"
-
-novelcovid@^3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/novelcovid/-/novelcovid-3.0.2.tgz#62eac242afd2ae8eda2151fd7ca365e534cba98c"
-  integrity sha512-JPMmLip5ZIyhXg70oRszXpBjMuitN0vKq0cj5hs1lY0w99fmqjyu4o36P9WntGAlzPDTE1wuj29P3HzUutxQrg==
-  dependencies:
-    "@aero/centra" "^1.0.3"
 
 npm-run-all@^4.1.5:
   version "4.1.5"
