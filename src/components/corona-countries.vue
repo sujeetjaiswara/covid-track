@@ -83,7 +83,7 @@
 </style>
 
 <script lang="ts" setup>
-import { onMounted, onUpdated, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
   countries: Array,
@@ -109,10 +109,6 @@ const headers = ref<any>([
 ]);
 
 onMounted(() => {
-  cloneCountries.value = [...props.countries];
-});
-
-onUpdated(()=>{
   cloneCountries.value = [...props.countries];
 });
 
