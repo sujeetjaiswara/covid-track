@@ -42,9 +42,13 @@ onMounted(async () => {
 async function getAllStatus() {
   setLoadingTotal(true);
 
-  const response = await fetch(`${api}/all`);
-  const jsonData = await response.json();
-  totalCounts.value = jsonData;
+  try {
+    const response = await fetch(`${api}/all`);
+    const jsonData = await response.json();
+    totalCounts.value = jsonData;
+  } catch (error) {
+    console.error('There was an error', error);
+  }
 
   setLoadingTotal(false);
 }
@@ -52,9 +56,13 @@ async function getAllStatus() {
 async function getAllCountries() {
   setLoadingCountries(true);
 
-  const response: any = await fetch(`${api}/countries`);
-  const jsonData = await response.json();
-  countries.value = jsonData.sort((a: any, b: any) => b.cases - a.cases);
+  try {
+    const response: any = await fetch(`${api}/countries`);
+    const jsonData = await response.json();
+    countries.value = jsonData.sort((a: any, b: any) => b.cases - a.cases);
+  } catch (error) {
+    console.error('There was an error', error);
+  }
 
   setLoadingCountries(false);
 }
@@ -62,9 +70,13 @@ async function getAllCountries() {
 async function getStatusByCountry(name: string) {
   setLoadingCountry(true);
 
-  const response: any = await fetch(`${api}/countries/${name}`);
-  const jsonData = await response.json();
-  countryObj.value = jsonData;
+  try {
+    const response: any = await fetch(`${api}/countries/${name}`);
+    const jsonData = await response.json();
+    countryObj.value = jsonData;
+  } catch (error) {
+    console.error('There was an error', error);
+  }
 
   setLoadingCountry(false);
 }
