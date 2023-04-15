@@ -1,14 +1,14 @@
-import { createVuetify} from 'vuetify'
+import { createVuetify } from 'vuetify'
 import { VDataTable } from 'vuetify/labs/VDataTable'
-import * as labs from 'vuetify/labs/components'
+import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-import colors from 'vuetify/lib/util/colors'
+// import colors from 'vuetify/lib/util/colors'
 
 const myCustomLightTheme = {
   dark: false,
   colors: {
-    primary: colors.grey.darken4, // #E53935
-    secondary: colors.red.lighten4, // #FFCDD2
+    primary: '#212121',
+    secondary: '#424242',
     // error: '#B00020',
     // info: '#2196F3',
     // success: '#4CAF50',
@@ -19,8 +19,8 @@ const myCustomLightTheme = {
 const myCustomDarkTheme = {
   dark: true,
   colors: {
-    primary: colors.grey.darken4, // #E53935
-    secondary: colors.red.lighten4, // #FFCDD2
+    primary: '#212121',
+    secondary: '#424242',
     // error: '#B00020',
     // info: '#2196F3',
     // success: '#4CAF50',
@@ -31,7 +31,7 @@ const myCustomDarkTheme = {
 export default createVuetify({
   components: {
     VDataTable,
-    ...labs,
+    VSkeletonLoader,
   },
   defaults: {
     VDataTable: {

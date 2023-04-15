@@ -7,9 +7,7 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-
-// TODO: Fix this path
-import vuetifyPlugins from '@/plugins/vuetify.js';
+import vuetifyPlugins from './plugins/vuetify.js';
 
 import './assets/main.css'
 
