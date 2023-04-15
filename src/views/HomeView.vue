@@ -6,14 +6,10 @@
     </div>
 
     <!-- All Coutries -->
-    <!-- <v-skeleton-loader v-if="isLoadingCountries" type="table" :boilerplate="isboilerplate" :tile="isTile"
-      min-height="400">
-    </v-skeleton-loader> -->
-    <div v-if="isLoadingCountries">
-      Loading...
-      <!-- <v-progress-linear indeterminate color="primary" class="mt-5"></v-progress-linear> -->
+    <div v-if="isLoadingCountries" class="mt-5">
+      <DashboardTileLoader></DashboardTileLoader>
     </div>
-    <div v-if="!isLoadingCountries">
+    <div v-else>
       <corona-countries :countries="countries" :isLoading="isLoadingCountries" @getStatusByCountry="getStatusByCountry">
       </corona-countries>
     </div>
@@ -24,6 +20,7 @@
 import { onMounted, ref } from "vue";
 import CoronaCountries from "./../components/corona-countries.vue";
 import DashboardTils from "./../components/dashboard-tile.vue";
+import DashboardTileLoader from "@/components/dashboard-tile-loader.vue";
 
 const api = `https://disease.sh/v3/covid-19`;
 const totalCounts = ref<any>({});
@@ -34,9 +31,9 @@ const countries = ref([]);
 const countryObj = ref({});
 
 onMounted(async () => {
-  await getStatusByCountry("IN");
-  await getAllStatus();
-  await getAllCountries();
+  getStatusByCountry("IN");
+  getAllStatus();
+  getAllCountries();
 });
 
 async function getAllStatus() {
