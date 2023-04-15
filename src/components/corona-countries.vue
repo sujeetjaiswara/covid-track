@@ -85,9 +85,14 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
 
-const props = defineProps({
-  countries: Array,
-  isLoading: Boolean
+export interface Props {  
+  isLoading?: boolean,
+  countries?: any[]  
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  isLoading: false,
+  countries: () => []
 });
 
 const emit = defineEmits(['getStatusByCountry']);
