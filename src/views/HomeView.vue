@@ -2,8 +2,7 @@
   <div>
     <!-- Summary -->
     <div>
-      <dashboard-tile-loader v-if="!isLoadingCountry"></dashboard-tile-loader>
-      <dashboard-tils v-if="!isLoadingCountry" :countryData="countryObj"></dashboard-tils>
+      <dashboard-tils :isLoading="isLoadingCountry" :countryData="countryObj"></dashboard-tils>
     </div>
 
     <!-- All Coutries -->
@@ -15,10 +14,9 @@
       <!-- <v-progress-linear indeterminate color="primary" class="mt-5"></v-progress-linear> -->
     </div>
     <div v-if="!isLoadingCountries">
-      <corona-countries :countries="countries" :isLoading="isLoadingCountries"
-      @getStatusByCountry="getStatusByCountry">
-    </corona-countries>
-    </div>    
+      <corona-countries :countries="countries" :isLoading="isLoadingCountries" @getStatusByCountry="getStatusByCountry">
+      </corona-countries>
+    </div>
   </div>
 </template>
 
@@ -26,10 +24,8 @@
 import { onMounted, ref } from "vue";
 import CoronaCountries from "./../components/corona-countries.vue";
 import DashboardTils from "./../components/dashboard-tile.vue";
-import DashboardTileLoader from "./../components/dashboard-tile-loader.vue";
 
 const api = `https://disease.sh/v3/covid-19`;
-
 const totalCounts = ref<any>({});
 const isLoadingCountries = ref(false);
 const isLoadingTotal = ref(false);

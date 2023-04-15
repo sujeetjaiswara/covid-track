@@ -3,8 +3,10 @@
     <div id="DashboardTils">
       <v-row dense>
         <v-col lg="4" md="4" sm="4" cols="12">
-          <v-card color="blue-grey-lighten-5" class="elevation-0 rounded-2 border" min-height="100">
-            <v-card-title class="subtitle-1 font-weight-medium text-uppercase" text-color="#000">            
+          <v-skeleton-loader v-if="isLoading" type="list-item-avatar" :height="cardHeight" :min-height="cardHeight"
+            color="blue-grey-lighten-5"></v-skeleton-loader>
+          <v-card v-else color="blue-grey-lighten-5" class="elevation-0 rounded-2 borderH" min-height="100">
+            <v-card-title class="subtitle-1 font-weight-medium text-uppercase" text-color="#000">
               <div class="d-flex flex-no-wrap justify-space-between">
                 <v-img :src="cloneCountry.countryInfo?.flag" max-width="30" class="me-2"></v-img>
                 <div> {{ cloneCountry.country }} </div>
@@ -15,7 +17,9 @@
         </v-col>
 
         <v-col lg="2" md="2" sm="2" cols="6">
-          <v-card color="red lighten-1" dark class="elevation-0 rounded-2" min-height="100">
+          <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
+            color="red lighten-1"></v-skeleton-loader>
+          <v-card v-else color="red lighten-1" dark class="elevation-0 rounded-2" min-height="100">
             <v-card-title class="headline">
               {{ cloneCountry['cases']?.toLocaleString() }}
             </v-card-title>
@@ -24,7 +28,9 @@
         </v-col>
 
         <v-col lg="2" md="2" sm="2" cols="6">
-          <v-card color="blue-grey darken-1" text-color="#fff" dark class="elevation-0 rounded-2" min-height="100">
+          <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
+            color="blue-grey darken-1"></v-skeleton-loader>
+          <v-card v-else color="blue-grey darken-1" text-color="#fff" dark class="elevation-0 rounded-2" min-height="100">
             <v-card-title class="headline">
               {{ cloneCountry['deaths']?.toLocaleString() }}
             </v-card-title>
@@ -33,7 +39,9 @@
         </v-col>
 
         <v-col lg="2" md="2" sm="2" cols="6">
-          <v-card color="green lighten-1" dark class="elevation-0 rounded-2" min-height="100">
+          <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
+            color="green lighten-1"></v-skeleton-loader>
+          <v-card v-else color="green lighten-1" dark class="elevation-0 rounded-2" min-height="100">
             <v-card-title class="headline">
               {{ cloneCountry['recovered']?.toLocaleString() }}
             </v-card-title>
@@ -42,28 +50,37 @@
         </v-col>
 
         <v-col lg="2" md="2" sm="2" cols="6">
-          <v-card color="blue" dark class="elevation-0 rounded-2" min-height="100">
+          <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
+            color="blue"></v-skeleton-loader>
+          <v-card v-else color="blue" dark class="elevation-0 rounded-2" min-height="100">
             <v-card-title class="headline">
               {{ cloneCountry['active']?.toLocaleString() }}
             </v-card-title>
             <v-card-subtitle>Active Cases </v-card-subtitle>
           </v-card>
         </v-col>
+
       </v-row>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUpdated ,ref } from 'vue';
 
 const props = defineProps({
+  isLoading: Boolean,
   countryData: Object,
 });
 
 const cloneCountry = ref<any>({});
+const cardHeight = ref(100);
 
 onMounted(() => {
+  cloneCountry.value = { ...props.countryData };
+});
+
+onUpdated(()=>{
   cloneCountry.value = { ...props.countryData };
 });
 </script>
