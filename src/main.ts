@@ -8,7 +8,7 @@ import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 
-import vuetifyPlugins from './plugins/vuetify.js';
+import vuetifyPlugins from '@/plugins/vuetify.js';
 
 import './assets/main.css'
 
