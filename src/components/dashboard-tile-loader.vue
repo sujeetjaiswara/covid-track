@@ -1,7 +1,7 @@
 <template>
-  <div>    
-
-    <v-row v-if="props.isLoading" dense>
+  <div>
+   <div>
+    <v-row dense>
       <v-col lg="4" md="4" sm="4" cols="12">
         <v-skeleton-loader type="card" :boilerplate="isboilerplate" :tile="isTile" :height="loaderHeight">
         </v-skeleton-loader>
@@ -27,22 +27,16 @@
         </v-skeleton-loader>
       </v-col>
     </v-row>
+   </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const props = defineProps({
-  isLoading: {
-    type: Boolean,
-    default: true
-  }
-});
-
 const isboilerplate = ref(false);
 const isTile = ref(false);
-const loaderHeight = ref(86);
+const loaderHeight = ref(10);
 </script>
 
 <style lang="scss" scoped></style>

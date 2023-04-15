@@ -1,21 +1,24 @@
 <template>
   <div>
     <!-- Summary -->
-    <dashboard-tile-loader :isLoading="isLoadingCountry"></dashboard-tile-loader>
-    <dashboard-tils v-if="!isLoadingCountry" :countryData="countryObj"></dashboard-tils>
-    <!-- // Summary -->
+    <div>
+      <dashboard-tile-loader v-if="!isLoadingCountry"></dashboard-tile-loader>
+      <dashboard-tils v-if="!isLoadingCountry" :countryData="countryObj"></dashboard-tils>
+    </div>
 
     <!-- All Coutries -->
     <!-- <v-skeleton-loader v-if="isLoadingCountries" type="table" :boilerplate="isboilerplate" :tile="isTile"
       min-height="400">
     </v-skeleton-loader> -->
     <div v-if="isLoadingCountries">
-      <v-progress-linear indeterminate color="primary" class="mt-5"></v-progress-linear>
+      Loading...
+      <!-- <v-progress-linear indeterminate color="primary" class="mt-5"></v-progress-linear> -->
     </div>
-    <corona-countries v-else :countries="countries" :isLoading="isLoadingCountries"
+    <div v-if="!isLoadingCountries">
+      <corona-countries :countries="countries" :isLoading="isLoadingCountries"
       @getStatusByCountry="getStatusByCountry">
     </corona-countries>
-    <!-- // All Coutries -->
+    </div>    
   </div>
 </template>
 
