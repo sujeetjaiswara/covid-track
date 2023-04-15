@@ -3,12 +3,13 @@
     <div id="DashboardTils">
       <v-row dense>
         <v-col lg="4" md="4" sm="4" cols="12">
-          <v-skeleton-loader v-if="isLoading" type="list-item-avatar" :height="cardHeight" :min-height="cardHeight"
+          <v-skeleton-loader v-if="isLoading" type="text" :height="cardHeight" :min-height="cardHeight"
             color="blue-grey-lighten-5"></v-skeleton-loader>
           <v-card v-else color="blue-grey-lighten-5" class="elevation-0 rounded-2 borderH" min-height="100">
             <v-card-title class="subtitle-1 font-weight-medium text-uppercase" text-color="#000">
               <div class="d-flex flex-no-wrap justify-space-between">
-                <v-img :src="cloneCountry.countryInfo?.flag" max-width="30" class="me-2"></v-img>
+                <v-img :lazy-src="cloneCountry.countryInfo?.flag" :src="cloneCountry.countryInfo?.flag" max-width="30"
+                  aspect-ratio="16/9" class="me-2"></v-img>
                 <div> {{ cloneCountry.country }} </div>
               </div>
             </v-card-title>
@@ -66,7 +67,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUpdated ,ref } from 'vue';
+import { onMounted, onUpdated, ref } from 'vue';
 
 const props = defineProps({
   isLoading: Boolean,
@@ -80,7 +81,7 @@ onMounted(() => {
   cloneCountry.value = { ...props.countryData };
 });
 
-onUpdated(()=>{
+onUpdated(() => {
   cloneCountry.value = { ...props.countryData };
 });
 </script>

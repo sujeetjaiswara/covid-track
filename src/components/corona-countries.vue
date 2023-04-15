@@ -18,7 +18,14 @@
       <!-- Country -->
       <template v-slot:item.country="{ item }">
         <div @click="getStatusByCountry(item.raw.country)" class="d-flex align-center country-link">
-          <v-img class="mr-2 float-left" :src="item.raw.countryInfo.flag" max-width="25"></v-img>
+          <v-img class="mr-2 float-left" :lazy-src="item.raw.countryInfo.flag" :src="item.raw.countryInfo.flag"
+            max-width="28">
+            <template v-slot:placeholder>
+              <div class="d-flex align-center justify-center h-100">
+                <v-progress-circular color="grey-lighten-5" indeterminate size="16" width="2"></v-progress-circular>
+              </div>
+            </template>
+          </v-img>
           {{ item.raw.country }}
         </div>
       </template>
