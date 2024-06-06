@@ -1,9 +1,11 @@
 <script lang="ts" setup>
+import type { Column } from '@/types/Column'
+import type { Country } from '@/types/Country'
 import { onMounted, ref } from 'vue'
 
 export interface Props {
   isLoading?: boolean
-  countries?: any[]
+  countries?: Country[]
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -11,17 +13,15 @@ const props = withDefaults(defineProps<Props>(), {
   countries: () => []
 })
 
-const emit = defineEmits(['getStatusByCountry'])
-
-const cloneCountries = ref<any>([])
+const cloneCountries = ref<Country[]>([])
 const search = ref('')
 
-const headers = ref<any>([
+const headers = ref<Column[]>([
   {
     title: 'Country',
+    key: 'country',
     align: 'start',
-    sortable: true,
-    key: 'country'
+    sortable: true
   },
   { title: 'Cases', key: 'cases' },
   { title: 'Deaths', key: 'deaths' },
@@ -32,23 +32,12 @@ const headers = ref<any>([
 onMounted(() => {
   cloneCountries.value = [...props.countries]
 })
-
-function getStatusByCountry(event: Event, row: any) {
-  event.stopPropagation()
-
-  const _row = JSON.parse(JSON.stringify(row))
-  const countryName = _row.item.value.countryInfo.iso2
-  emit('getStatusByCountry', countryName)
-}
 </script>
 
 <template>
   <div>
-    <v-row class="mt-5">
-      <v-col lg="8" md="4" sm="4" cols="12">
-        <!-- <h4>Cases</h4> -->
-      </v-col>
-      <v-col lg="4" md="4" sm="4" cols="12">
+    <v-row class="mt-5 d-flex justify-end">
+      <v-col :sm="6" :md="4">
         <v-text-field
           v-model="search"
           label="Search country"
@@ -68,14 +57,13 @@ function getStatusByCountry(event: Event, row: any) {
       :headers="headers"
       :items="cloneCountries"
       :items-per-page="10"
-      class="elevation-0 mt-5 border rounded pb-3"
       :loading="isLoading"
       loading-text="Loading.."
       :search="search"
       color="primary"
       item-key="country"
       :single-select="true"
-      @click:row="getStatusByCountry"
+      class="elevation-0 mt-5 border rounded pb-3"
     >
       <!-- Country -->
       <template v-slot:item.country="{ item }">

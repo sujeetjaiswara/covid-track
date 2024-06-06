@@ -5,10 +5,11 @@ import CvStatistics from '@/components/cv-statistics.vue'
 import CvStatisticsLoader from '@/components/cv-statistics-loader.vue'
 import DashboardTileLoader from '@/components/dashboard-tile-loader.vue'
 import type { Statistic } from '@/types/Statistic'
+import type { Country } from '@/types/Country'
 
 // const api = import.meta.env.BASE_URL;
 const api = 'https://disease.sh/v3/covid-19'
-const countries = ref([])
+const countries = ref<Country[]>([])
 const statistics = ref<Statistic>()
 const isLoading = ref(false)
 const isLoadingStatistics = ref(false)
