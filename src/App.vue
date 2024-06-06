@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { useTheme } from 'vuetify'
+
+const theme = useTheme()
+
+// Set dark mode if user system prefers scheme
+if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  theme.global.name.value = 'dark'
+}
+
+const onToggleTheme = () => {
+  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
+</script>
+
 <template>
   <v-layout class="px-5 pt-3">
     <!-- Menu -->
@@ -16,23 +32,6 @@
     </v-main>
   </v-layout>
 </template>
-
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { useTheme } from 'vuetify'
-
-const theme = useTheme();
-
-// Set dark mode if user system prefers scheme
-if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-  theme.global.name.value = 'dark'
-}
-
-// Toggle theme
-function onToggleTheme() {
-  theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
-}
-</script>
 
 <style>
 .main-content {
