@@ -1,96 +1,68 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import CoronaCountries from './../components/corona-countries.vue'
-import DashboardTils from './../components/dashboard-tile.vue'
+import CoronaCountries from '@/components/corona-countries.vue'
+import CvStatistics from '@/components/cv-statistics.vue'
+import CvStatisticsLoader from '@/components/cv-statistics-loader.vue'
 import DashboardTileLoader from '@/components/dashboard-tile-loader.vue'
+import type { Statistic } from '@/types/Statistic'
 
-const api = `https://disease.sh/v3/covid-19`
-const totalCounts = ref<any>({})
-const isLoadingCountries = ref(false)
-const isLoadingTotal = ref(false)
-const isLoadingCountry = ref(true)
+// const api = import.meta.env.BASE_URL;
+const api = 'https://disease.sh/v3/covid-19'
 const countries = ref([])
-const countryObj = ref({})
+const statistics = ref<Statistic>()
+const isLoading = ref(false)
+const isLoadingStatistics = ref(false)
 
 onMounted(async () => {
-  getStatusByCountry('IN')
-  getAllStatus()
-  getAllCountries()
+  await getStatistics()
+  await getAllCountries()
 })
 
-async function getAllStatus() {
-  setLoadingTotal(true)
-
+const getStatistics = async () => {
+  setLoadingStatistics(true)
   try {
     const response = await fetch(`${api}/all`)
     const jsonData = await response.json()
-    totalCounts.value = jsonData
+    statistics.value = jsonData
   } catch (error) {
-    console.error('There was an error', error)
+    console.error(error)
+  } finally {
+    setLoadingStatistics(false)
   }
-
-  setLoadingTotal(false)
 }
 
-async function getAllCountries() {
-  setLoadingCountries(true)
+const setLoadingStatistics = (value: boolean) => {
+  isLoadingStatistics.value = value
+}
 
+const getAllCountries = async () => {
+  setLoadingCountries(true)
   try {
     const response: any = await fetch(`${api}/countries`)
     const jsonData = await response.json()
     countries.value = jsonData.sort((a: any, b: any) => b.cases - a.cases)
   } catch (error) {
-    console.error('There was an error', error)
+    console.error(error)
+  } finally {
+    setLoadingCountries(false)
   }
-
-  setLoadingCountries(false)
 }
 
-async function getStatusByCountry(iso2: string) {
-  setLoadingCountry(true)
-
-  try {
-    const response: any = await fetch(`${api}/countries/${iso2}`)
-    const jsonData = await response.json()
-    countryObj.value = jsonData
-  } catch (error) {
-    console.error('There was an error', error)
-  }
-
-  setLoadingCountry(false)
-}
-
-function setLoadingTotal(value: boolean) {
-  isLoadingTotal.value = value
-}
-
-function setLoadingCountry(value: boolean) {
-  isLoadingCountry.value = value
-}
-
-function setLoadingCountries(value: boolean) {
-  isLoadingCountries.value = value
+const setLoadingCountries = (value: boolean) => {
+  isLoading.value = value
 }
 </script>
 
 <template>
-  <div>
-    <!-- Summary -->
-    <div>
-      <dashboard-tils :isLoading="isLoadingCountry" :countryData="countryObj"></dashboard-tils>
-    </div>
+  <CvStatisticsLoader v-if="isLoadingStatistics" />
+  <template v-else>
+    <CvStatistics v-if="statistics" :isLoading="isLoadingStatistics" :statistics="statistics" />
+  </template>
 
-    <!-- All Coutries -->
-    <div v-if="isLoadingCountries" class="mt-5">
-      <DashboardTileLoader></DashboardTileLoader>
-    </div>
-    <div v-else>
-      <corona-countries
-        :countries="countries"
-        :isLoading="isLoadingCountries"
-        @getStatusByCountry="getStatusByCountry"
-      >
-      </corona-countries>
-    </div>
+  <div v-if="isLoading" class="mt-5">
+    <DashboardTileLoader></DashboardTileLoader>
+  </div>
+  <div v-else>
+    <corona-countries :countries="countries" :isLoading="isLoading" />
   </div>
 </template>

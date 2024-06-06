@@ -11,53 +11,19 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="d-flex justify-end w-100">
     <v-skeleton-loader
-      type="table-row"
+      type="list-item"
       :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
-    ></v-skeleton-loader>
-
-    <v-skeleton-loader
-      type="table-row"
-      :color="!isDarkTheme ? '#eee' : ''"
-      class="mb-1"
+      class="mb-5 w-25"
     ></v-skeleton-loader>
   </div>
+
+  <v-skeleton-loader
+    v-for="(n, index) in 4"
+    :key="index"
+    type="table-row"
+    :color="!isDarkTheme ? '#eee' : ''"
+    class="mb-1"
+  ></v-skeleton-loader>
 </template>
