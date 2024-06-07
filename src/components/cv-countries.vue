@@ -43,7 +43,7 @@ watchEffect(() => {
   <v-card flat class="mt-5">
     <v-card-title class="d-flex align-center pe-2">
       Global cases
-      <v-spacer></v-spacer>
+      <v-spacer class="w-50"></v-spacer>
       <v-text-field
         v-model="search"
         density="compact"
@@ -55,6 +55,7 @@ watchEffect(() => {
         single-line
       ></v-text-field>
     </v-card-title>
+
     <v-divider></v-divider>
 
     <v-data-table
