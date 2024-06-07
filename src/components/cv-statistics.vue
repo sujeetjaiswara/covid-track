@@ -1,21 +1,13 @@
 <script lang="ts" setup>
 import type { Statistic } from '@/types/Statistic'
-import { onMounted, onUpdated, ref } from 'vue'
+import type { StatisticsProp } from '@/types/StatisticsProp'
+import { onMounted, ref } from 'vue'
 
-interface Prop {
-  isLoading: Boolean
-  statistics: Statistic
-}
-
-const props = defineProps<Prop>()
+const props = defineProps<StatisticsProp>()
 const cloneStatistics = ref<Statistic>()
 const cardHeight = ref(100)
 
 onMounted(() => {
-  cloneStatistics.value = { ...props.statistics }
-})
-
-onUpdated(() => {
   cloneStatistics.value = { ...props.statistics }
 })
 </script>
