@@ -17,7 +17,7 @@ const onToggleTheme = () => {
 </script>
 
 <template>
-  <v-app-bar color="primary" elevation="0">
+  <v-app-bar color="primary" :elevation="1">
     <v-app-bar-title><span class="me-1 fs-2">🦠</span>Covid Track</v-app-bar-title>
     <v-spacer></v-spacer>
     <v-btn icon @click="onToggleTheme">

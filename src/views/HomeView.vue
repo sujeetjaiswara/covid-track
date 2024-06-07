@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import CvCountriesLoader from '@/components/cv-countries-loader.vue'
 import CvCountries from '@/components/cv-countries.vue'
 import CvStatisticsLoader from '@/components/cv-statistics-loader.vue'
 import CvStatistics from '@/components/cv-statistics.vue'
@@ -7,7 +6,6 @@ import type { Country } from '@/types/Country'
 import type { Statistic } from '@/types/Statistic'
 import { onMounted, ref } from 'vue'
 
-// const api = import.meta.env.BASE_URL;
 const api = 'https://disease.sh/v3/covid-19'
 const countries = ref<Country[]>([])
 const statistics = ref<Statistic>()
@@ -20,23 +18,19 @@ onMounted(async () => {
 })
 
 const getStatistics = async () => {
-  setLoadingStatistics(true)
+  isLoadingStatistics.value = true
   try {
     const response = await fetch(`${api}/all`)
     statistics.value = await response.json()
   } catch (error) {
     console.error(error)
   } finally {
-    setLoadingStatistics(false)
+    isLoadingStatistics.value = false
   }
 }
 
-const setLoadingStatistics = (value: boolean) => {
-  isLoadingStatistics.value = value
-}
-
 const getAllCountries = async () => {
-  setLoadingCountries(true)
+  isLoading.value = true
   try {
     const response: any = await fetch(`${api}/countries`)
     const jsonData = await response.json()
@@ -44,12 +38,8 @@ const getAllCountries = async () => {
   } catch (error) {
     console.error(error)
   } finally {
-    setLoadingCountries(false)
+    isLoading.value = false
   }
-}
-
-const setLoadingCountries = (value: boolean) => {
-  isLoading.value = value
 }
 </script>
 
@@ -58,11 +48,5 @@ const setLoadingCountries = (value: boolean) => {
   <template v-else>
     <CvStatistics v-if="statistics" :isLoading="isLoadingStatistics" :statistics="statistics" />
   </template>
-
-  <div v-if="isLoading" class="mt-5">
-    <CvCountriesLoader />
-  </div>
-  <template v-else>
-    <CvCountries :countries="countries" :isLoading="isLoading" />
-  </template>
+  <CvCountries :countries="countries" :isLoading="isLoading" />
 </template>

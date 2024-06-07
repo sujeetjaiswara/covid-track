@@ -1,55 +1,34 @@
 import { createVuetify } from 'vuetify'
-import { VDataTable } from 'vuetify/labs/VDataTable'
-import { VSkeletonLoader } from 'vuetify/labs/VSkeletonLoader'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
-// import colors from 'vuetify/lib/util/colors'
 
-const myCustomLightTheme = {
+const cvLightTheme = {
   dark: false,
   colors: {
     primary: '#212121',
-    secondary: '#424242',
-    // error: '#B00020',
-    // info: '#2196F3',
-    // success: '#4CAF50',
-    // warning: '#FB8C00',
+    secondary: '#424242'
   }
 }
 
-const myCustomDarkTheme = {
+const cvDarkTheme = {
   dark: true,
   colors: {
-    primary: '#212121',
-    secondary: '#424242',
-    // error: '#B00020',
-    // info: '#2196F3',
-    // success: '#4CAF50',
-    // warning: '#FB8C00',
+    primary: '#101415',
+    secondary: '#101415'
   }
 }
 
 export default createVuetify({
-  components: {
-    VDataTable,
-    VSkeletonLoader,
-  },
-  defaults: {
-    VDataTable: {
-      fixedHeader: true,
-      noDataText: 'Results not found',
-    },
-  },
   icons: {
     defaultSet: 'mdi',
     aliases,
     sets: {
-      mdi,
+      mdi
     }
   },
   theme: {
     themes: {
-      light: myCustomLightTheme,
-      dark: myCustomDarkTheme
-    },
-  },
+      light: cvLightTheme,
+      dark: cvDarkTheme
+    }
+  }
 })

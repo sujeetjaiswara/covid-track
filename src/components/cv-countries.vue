@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { Column } from '@/types/Column'
 import type { Country } from '@/types/Country'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, shallowRef, watchEffect } from 'vue'
 
 export interface Props {
   isLoading?: boolean
@@ -15,8 +15,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 const cloneCountries = ref<Country[]>([])
 const search = ref('')
+const loading = shallowRef(false)
 
-const headers = ref<Column[]>([
+const headers: Column[] = [
   {
     title: 'Country',
     key: 'country',
@@ -27,51 +28,52 @@ const headers = ref<Column[]>([
   { title: 'Deaths', key: 'deaths' },
   { title: 'Recovered', key: 'recovered' },
   { title: 'Active', key: 'active' }
-])
+]
 
-onMounted(() => {
-  cloneCountries.value = [...props.countries]
+watchEffect(() => {
+  loading.value = props.isLoading
+
+  if (!props.isLoading) {
+    cloneCountries.value = [...props.countries]
+  }
 })
 </script>
 
 <template>
-  <div>
-    <v-row class="mt-5 d-flex justify-end">
-      <v-col :sm="6" :md="4">
-        <v-text-field
-          v-model="search"
-          label="Search country"
-          append-inner-icon="mdi-magnify"
-          single-line
-          hide-details
-          density="compact"
-          variant="outlined"
-          class="w-50 float-right"
-          :height="20"
-          color="primary"
-        ></v-text-field>
-      </v-col>
-    </v-row>
+  <v-card flat class="mt-5">
+    <v-card-title class="d-flex align-center pe-2">
+      Global cases
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        density="compact"
+        label="Search"
+        prepend-inner-icon="mdi-magnify"
+        variant="solo-filled"
+        flat
+        hide-details
+        single-line
+      ></v-text-field>
+    </v-card-title>
+    <v-divider></v-divider>
 
     <v-data-table
       :headers="headers"
+      v-model:search="search"
       :items="cloneCountries"
       :items-per-page="10"
-      :loading="isLoading"
-      loading-text="Loading.."
-      :search="search"
-      color="primary"
-      item-key="country"
-      :single-select="true"
-      class="elevation-0 mt-5 border rounded pb-3"
+      :loading="loading"
     >
-      <!-- Country -->
+      <template v-slot:loading>
+        <v-skeleton-loader type="table-row@10"></v-skeleton-loader>
+      </template>
+
       <template v-slot:item.country="{ item }">
-        <div class="d-flex align-center country-link">
+        <div class="d-flex align-center">
           <v-img
             class="mr-2 float-left"
-            :lazy-src="item.raw.countryInfo.flag"
-            :src="item.raw.countryInfo.flag"
+            :lazy-src="item.countryInfo.flag"
+            :src="item.countryInfo.flag"
             max-width="28"
           >
             <template v-slot:placeholder>
@@ -85,14 +87,14 @@ onMounted(() => {
               </div>
             </template>
           </v-img>
-          {{ item.raw.country }}
+          {{ item.country }}
         </div>
       </template>
 
       <!-- Cases -->
       <template v-slot:item.cases="{ item }">
-        <v-chip v-if="item.raw.cases" color="red" text-color="white">
-          {{ item.raw.cases?.toLocaleString() }}
+        <v-chip v-if="item.cases" color="red" text-color="white">
+          {{ item.cases?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="red" text-color="white">0</v-chip>
       </template>
@@ -100,13 +102,13 @@ onMounted(() => {
       <!-- Deaths -->
       <template v-slot:item.deaths="{ item }">
         <v-chip
-          v-if="item.raw.deaths"
+          v-if="item.deaths"
           color="blue-grey lighten-4"
           text-color="blue-grey lighten-2"
           outlined
         >
           <v-icon class="me-1">mdi-emoticon-sad</v-icon>
-          {{ item.raw.deaths?.toLocaleString() }}
+          {{ item.deaths?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="blue-grey lighten-4" text-color="blue-grey lighten-2">
           <v-icon class="me-1">mdi-emoticon-sad</v-icon>0
@@ -115,9 +117,9 @@ onMounted(() => {
 
       <!-- Recovered -->
       <template v-slot:item.recovered="{ item }">
-        <v-chip v-if="item.raw.recovered" color="green lighten-1" text-color="white">
+        <v-chip v-if="item.recovered" color="green lighten-1" text-color="white">
           <v-icon class="me-1">mdi-emoticon-happy</v-icon>
-          {{ item.raw.recovered?.toLocaleString() }}
+          {{ item.recovered?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="green lighten-1" text-color="white">
           <v-icon class="me-1">mdi-emoticon-happy</v-icon>0
@@ -126,17 +128,11 @@ onMounted(() => {
 
       <!-- Active -->
       <template v-slot:item.active="{ item }">
-        <v-chip v-if="item.raw.active" color="blue" text-color="white">
-          {{ item.raw.active?.toLocaleString() }}
+        <v-chip v-if="item.active" color="blue" text-color="white">
+          {{ item.active?.toLocaleString() }}
         </v-chip>
         <v-chip v-else color="blue" text-color="white">0</v-chip>
       </template>
     </v-data-table>
-  </div>
+  </v-card>
 </template>
-
-<style scoped>
-.country-link {
-  cursor: pointer;
-}
-</style>
