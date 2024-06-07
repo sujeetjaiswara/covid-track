@@ -60,9 +60,9 @@ const setLoadingCountries = (value: boolean) => {
   </template>
 
   <div v-if="isLoading" class="mt-5">
-    <CvCountriesLoader></CvCountriesLoader>
+    <CvCountriesLoader />
   </div>
-  <div v-else>
+  <template v-else>
     <CvCountries :countries="countries" :isLoading="isLoading" />
-  </div>
+  </template>
 </template>
