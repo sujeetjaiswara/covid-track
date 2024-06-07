@@ -1,23 +1,15 @@
 import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
-
-// Vuetify
 import { createVuetify } from 'vuetify'
-import * as components from 'vuetify/components'
-import * as directives from 'vuetify/directives'
 import 'vuetify/styles'
-import vuetifyPlugins from './plugins/vuetify.js'
-
+import App from './App.vue'
 import './assets/main.css'
-
-const vuetify = createVuetify({
-  components,
-  directives
-})
+import vuetifyPlugins from './plugins/vuetify.js'
+import router from './router'
 
 const app = createApp(App)
 app.use(router)
+
+const vuetify = createVuetify()
 app.use(vuetify)
 app.use(vuetifyPlugins)
 app.mount('#app')
