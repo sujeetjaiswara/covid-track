@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import type { Column } from '@/types/Column'
 import type { Country } from '@/types/Country'
-import { onMounted, ref, shallowRef, watchEffect } from 'vue'
+import { ref, shallowRef, watchEffect } from 'vue'
 
 export interface Props {
   isLoading?: boolean
@@ -17,12 +16,11 @@ const cloneCountries = ref<Country[]>([])
 const search = ref('')
 const loading = shallowRef(false)
 
-const headers: Column[] = [
+const headers = [
   {
     title: 'Country',
-    key: 'country',
-    align: 'start',
-    sortable: true
+    sortable: false,
+    key: 'country'
   },
   { title: 'Cases', key: 'cases' },
   { title: 'Deaths', key: 'deaths' },
