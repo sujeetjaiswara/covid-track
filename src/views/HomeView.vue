@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import CoronaCountries from '@/components/corona-countries.vue'
-import CvStatistics from '@/components/cv-statistics.vue'
+import CvCountriesLoader from '@/components/cv-countries-loader.vue'
+import CvCountries from '@/components/cv-countries.vue'
 import CvStatisticsLoader from '@/components/cv-statistics-loader.vue'
-import DashboardTileLoader from '@/components/dashboard-tile-loader.vue'
-import type { Statistic } from '@/types/Statistic'
+import CvStatistics from '@/components/cv-statistics.vue'
 import type { Country } from '@/types/Country'
+import type { Statistic } from '@/types/Statistic'
+import { onMounted, ref } from 'vue'
 
 // const api = import.meta.env.BASE_URL;
 const api = 'https://disease.sh/v3/covid-19'
@@ -23,8 +23,7 @@ const getStatistics = async () => {
   setLoadingStatistics(true)
   try {
     const response = await fetch(`${api}/all`)
-    const jsonData = await response.json()
-    statistics.value = jsonData
+    statistics.value = await response.json()
   } catch (error) {
     console.error(error)
   } finally {
@@ -61,9 +60,9 @@ const setLoadingCountries = (value: boolean) => {
   </template>
 
   <div v-if="isLoading" class="mt-5">
-    <DashboardTileLoader></DashboardTileLoader>
+    <CvCountriesLoader></CvCountriesLoader>
   </div>
   <div v-else>
-    <corona-countries :countries="countries" :isLoading="isLoading" />
+    <CvCountries :countries="countries" :isLoading="isLoading" />
   </div>
 </template>

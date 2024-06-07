@@ -4,19 +4,10 @@ import CvMenu from '@/components/cv-menu.vue'
 </script>
 
 <template>
-  <v-layout class="px-5 pt-3">
+  <v-layout class="px-5 pt-2">
     <CvMenu />
-    <v-main class="main-content">
+    <v-main class="my-3">
       <RouterView />
     </v-main>
   </v-layout>
 </template>
-
-<style>
-.main-content {
-  min-height: 90vh;
-  margin-top: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
-}
-</style>

@@ -18,7 +18,7 @@ const onToggleTheme = () => {
 
 <template>
   <v-app-bar color="primary" elevation="0">
-    <v-app-bar-title><span class="me-2 fs-2">🦠</span>Covid Track</v-app-bar-title>
+    <v-app-bar-title><span class="me-1 fs-2">🦠</span>Covid Track</v-app-bar-title>
     <v-spacer></v-spacer>
     <v-btn icon @click="onToggleTheme">
       <v-icon v-if="theme.global.current.value.dark">mdi-weather-night</v-icon>
